@@ -1,5 +1,5 @@
-import { reactive } from '../reactive';
-import { effect, stop } from '../effect';
+import { reactive } from '../reactive2';
+import { effect, stop } from '../effect2';
 
 describe('effect', () => {
     it('happy path', () => {
