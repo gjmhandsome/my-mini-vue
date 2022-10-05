@@ -1,4 +1,5 @@
 import { track, tigger } from "./effect";
+import { reactiveFlag } from "./reactive";
 
 const get = createGetter();
 const set = createSetter();
@@ -8,6 +9,12 @@ const readyonlyset = createReadOnlySetter();
 function createGetter(isReadyOnly = false) {
   return function get(target, key) {
     const res = Reflect.get(target, key);
+    if (key === reactiveFlag.is_Reactive) {
+      return !isReadyOnly;
+    }
+    if (key === reactiveFlag.is_Readyonly) {
+      return isReadyOnly;
+    }
     if (!isReadyOnly) {
       // 依赖收集
       track(target, key);
