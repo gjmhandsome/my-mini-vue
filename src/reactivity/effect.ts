@@ -57,19 +57,27 @@ export function track(target, key) {
     dep = new Set();
     depsMap.set(key, dep);
   }
+  trackEffects(dep);
+}
+
+export function trackEffects(dep) {
   // 看看 dep 之前有没有添加过，添加过的话 那么就不添加了
   if (dep.has(activeEffect)) return;
   dep.add(activeEffect);
   activeEffect.deps.push(dep);
 }
 
-function isTracking() {
+export function isTracking() {
   return shouldTrack && activeEffect !== undefined;
 }
 
 export function tigger(target, key) {
   const depsMap = targetMap.get(target);
   const deps = depsMap.get(key);
+  triggerEffects(deps);
+}
+
+export function triggerEffects(deps) {
   for (const effect of deps) {
     if (effect.scheduler) {
       effect.scheduler();
