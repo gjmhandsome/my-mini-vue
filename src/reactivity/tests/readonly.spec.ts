@@ -15,4 +15,10 @@ describe("readonly", () => {
     user.age = 2;
     expect(console.warn).toBeCalled();
   });
+  it("nest handle", () => {
+    const original = { foo: { a: 123 }, bar: { a: [1, 2, 3] } };
+    const observed = readonly(original);
+    expect(isReadyonly(observed.foo)).toBe(true);
+    expect(isReadyonly(observed.bar)).toBe(true);
+  });
 });
