@@ -6,6 +6,7 @@ class RefImpl {
   private _value;
   public dep;
   private _rawValue;
+  private _v_is_ref = true;
   constructor(value) {
     this._rawValue = value;
     this._value = covert(value);
@@ -36,4 +37,12 @@ function trackRefValue(ref) {
 
 export function ref(value) {
   return new RefImpl(value);
+}
+
+export function isRef(value) {
+  return !!value._v_is_ref;
+}
+
+export function unRef(value) {
+  return isRef(value) ? value.value : value;
 }
