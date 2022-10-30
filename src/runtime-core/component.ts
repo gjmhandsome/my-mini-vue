@@ -2,7 +2,7 @@
  * @Author: guanjiameng gjmhandsome@163.com
  * @Date: 2022-10-29 18:17:43
  * @LastEditors: guanjiameng gjmhandsome@163.com
- * @LastEditTime: 2022-10-29 18:25:27
+ * @LastEditTime: 2022-10-30 15:22:48
  * @FilePath: /mini-vue/src/runtime-core/component.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -44,8 +44,8 @@ function handleSetupResult(instance, setupResult) {
 
 function finishComponentSetup(instance) {
   const Component = instance.type;
-
-  if (Component.render) {
-    instance.render = Component.render;
-  }
+  instance.render = Component.render;
+  // if (Component.render) {
+  //   instance.render = Component.render;
+  // }
 }

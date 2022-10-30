@@ -18,7 +18,40 @@ export function render(vnode, container) {
 }
 
 function patch(vnode: any, container: any) {
-  processComponents(vnode, container);
+  // TODO: 判断vnode是不是一个element
+  if (typeof vnode.type === "string") {
+    processElement(vnode, container);
+  } else {
+    processComponents(vnode, container);
+  }
+}
+
+function processElement(vnode, container) {
+  mountElement(vnode, container);
+}
+
+function mountElement(vnode: any, container: any) {
+  const el = document.createElement(vnode.type);
+
+  const { children } = vnode;
+
+  if (typeof vnode.children === "string") {
+    el.textContent = children;
+  } else if (Array.isArray(children)) {
+    mountChildren(vnode, el);
+  }
+  const { props } = vnode;
+  for (let key in props) {
+    let val = props[key];
+    el.setAttribute(key, val);
+  }
+  container.append(el);
+}
+
+function mountChildren(vnode, container) {
+  vnode.children.forEach((v) => {
+    patch(v, container);
+  });
 }
 
 function processComponents(vnode, container) {
